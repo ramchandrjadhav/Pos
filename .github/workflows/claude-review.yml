@@ -1,0 +1,17 @@
+name: Claude AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Claude Code Review
+        uses: chimaek/claude-code-review-action@v1.0.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

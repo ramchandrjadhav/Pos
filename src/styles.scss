@@ -1,0 +1,195 @@
+/* Import PrimeIcons */
+@import 'primeicons/primeicons.css';
+
+/* ONDC Brand Colors - Dark Blue Professional Theme */
+:root {
+  --ondc-primary: #0D47A1;      /* Deep Blue */
+  --ondc-primary-dark: #002171;
+  --ondc-primary-light: #5472D3;
+  --ondc-secondary: #00C853;     /* Material Green */
+  --ondc-accent: #FF9800;        /* Material Orange */
+  --ondc-background: #F5F5F5;
+  --ondc-surface: #FFFFFF;
+  --ondc-text-primary: #212121;
+  --ondc-text-secondary: #757575;
+  --ondc-border: #E0E0E0;
+  --ondc-hover: #EEEEEE;
+  --ondc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --ondc-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Dark Sidebar Theme */
+  --ondc-sidebar-bg: #1A2332;
+  --ondc-sidebar-darker: #0F1419;
+  --ondc-sidebar-active: #0D47A1;
+  --ondc-sidebar-hover: #253447;
+  --ondc-sidebar-text: #FFFFFF;
+  --ondc-sidebar-text-secondary: #B0BEC5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--ondc-background);
+  color: var(--ondc-text-primary);
+  line-height: 1.6;
+}
+
+/* Override PrimeNG theme with ONDC colors */
+.p-component {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.p-button {
+  background-color: var(--ondc-primary);
+  border-color: var(--ondc-primary);
+  font-weight: 500;
+  transition: all 0.15s ease;
+  
+  &:enabled:hover {
+    background-color: var(--ondc-primary-dark);
+    border-color: var(--ondc-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--ondc-shadow-md);
+  }
+
+  &:enabled:active {
+    transform: translateY(0);
+  }
+}
+
+.p-button-success {
+  background-color: var(--ondc-secondary);
+  border-color: var(--ondc-secondary);
+
+  &:enabled:hover {
+    background-color: #059669;
+    border-color: #059669;
+  }
+}
+
+.p-button-outlined {
+  background-color: transparent;
+  color: var(--ondc-primary);
+  border-color: var(--ondc-border);
+
+  &:enabled:hover {
+    background-color: var(--ondc-hover);
+    color: var(--ondc-primary-dark);
+    border-color: var(--ondc-primary);
+  }
+}
+
+.p-dropdown {
+  border-color: var(--ondc-border);
+  font-size: 13px;
+
+  &:not(.p-disabled):hover {
+    border-color: var(--ondc-primary);
+  }
+
+  &:not(.p-disabled).p-focus {
+    border-color: var(--ondc-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.p-inputtext {
+  border-color: var(--ondc-border);
+  font-size: 13px;
+
+  &:enabled:hover {
+    border-color: var(--ondc-primary);
+  }
+
+  &:enabled:focus {
+    border-color: var(--ondc-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.p-datatable {
+  .p-datatable-header {
+    background-color: var(--ondc-surface);
+    border-color: var(--ondc-border);
+  }
+  
+  .p-datatable-thead > tr > th {
+    background-color: var(--ondc-primary);
+    color: white;
+    font-weight: 600;
+    border-color: var(--ondc-primary-dark);
+  }
+  
+  .p-datatable-tbody > tr {
+    &:hover {
+      background-color: var(--ondc-hover);
+      cursor: pointer;
+    }
+  }
+}
+
+.p-dialog {
+  .p-dialog-header {
+    background-color: var(--ondc-primary);
+    color: white;
+  }
+
+  .p-dialog-content {
+    padding: 20px;
+  }
+}
+
+.p-paginator {
+  .p-paginator-current {
+    color: var(--ondc-text-secondary);
+    font-size: 13px;
+  }
+
+  .p-paginator-pages .p-paginator-page {
+    &.p-highlight {
+      background-color: var(--ondc-primary);
+      border-color: var(--ondc-primary);
+    }
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ondc-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ondc-border);
+  border-radius: 4px;
+  
+  &:hover {
+    background: var(--ondc-text-secondary);
+  }
+}
+
+/* Utility Classes */
+.text-primary {
+  color: var(--ondc-primary);
+}
+
+.text-secondary {
+  color: var(--ondc-secondary);
+}
+
+.bg-primary {
+  background-color: var(--ondc-primary);
+}
+
+.bg-surface {
+  background-color: var(--ondc-surface);
+}

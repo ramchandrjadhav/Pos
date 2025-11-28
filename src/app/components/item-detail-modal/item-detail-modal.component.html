@@ -1,0 +1,187 @@
+<p-dialog 
+  [(visible)]="visible" 
+  [modal]="true"
+  [style]="{width: '600px'}"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="onClose()"
+>
+  <ng-template pTemplate="header">
+    <div class="modal-header">
+      <i class="pi pi-pencil"></i>
+      <span>Edit Item Categories</span>
+    </div>
+  </ng-template>
+
+  <div class="modal-content" *ngIf="item">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i>
+      <p>Loading product details...</p>
+    </div>
+
+    <!-- Item Details (Read-only) -->
+    <div class="detail-section" *ngIf="!loading">
+      <h4>Product Information</h4>
+      
+      <!-- Product Images -->
+      <div class="product-images" *ngIf="fullItemDetails?.images && (fullItemDetails?.images?.length || 0) > 0">
+        <p-galleria 
+          [value]="fullItemDetails?.images || []" 
+          [responsiveOptions]="[
+            {breakpoint: '1024px', numVisible: 5},
+            {breakpoint: '768px', numVisible: 3},
+            {breakpoint: '560px', numVisible: 1}
+          ]"
+          [containerStyle]="{'max-width': '100%'}"
+          [numVisible]="5"
+          [circular]="true"
+          [showItemNavigators]="true"
+          [showThumbnails]="true"
+        >
+          <ng-template pTemplate="item" let-image>
+            <img [src]="image" style="width: 100%; max-height: 400px; object-fit: contain; display: block;" />
+          </ng-template>
+          <ng-template pTemplate="thumbnail" let-image>
+            <img [src]="image" style="width: 100%; height: 60px; object-fit: cover; display: block;" />
+          </ng-template>
+        </p-galleria>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item full-width">
+          <label>Item ID:</label>
+          <span class="item-id">{{fullItemDetails?.item_id || item.item_id}}</span>
+        </div>
+        <div class="detail-item full-width">
+          <label>Product Name:</label>
+          <span class="product-name">{{fullItemDetails?.name || item.name}}</span>
+        </div>
+        <div class="detail-item full-width" *ngIf="fullItemDetails?.short_desc">
+          <label>Short Description:</label>
+          <span class="description">{{fullItemDetails?.short_desc}}</span>
+        </div>
+        <div class="detail-item full-width" *ngIf="fullItemDetails?.long_desc">
+          <label>Long Description:</label>
+          <span class="description">{{fullItemDetails?.long_desc}}</span>
+        </div>
+        <div class="detail-item full-width" *ngIf="fullItemDetails?.symbol">
+          <label>Symbol:</label>
+          <span class="symbol">{{fullItemDetails?.symbol}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.price_value || item.price">
+          <label>Price:</label>
+          <span class="price">₹{{fullItemDetails?.price_value || item.price}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.price_maximum_value">
+          <label>Max Price:</label>
+          <span class="price max-price">₹{{fullItemDetails?.price_maximum_value}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.quantity_available !== undefined && fullItemDetails?.quantity_available !== null">
+          <label>Available Quantity:</label>
+          <span class="quantity">{{fullItemDetails?.quantity_available}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.quantity_maximum">
+          <label>Max Allowed Qty:</label>
+          <span>{{fullItemDetails?.quantity_maximum}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.quantity_unit">
+          <label>Unit:</label>
+          <span>{{fullItemDetails?.quantity_unit}} ({{fullItemDetails?.quantity_unit_value}})</span>
+        </div>
+        <div class="detail-item">
+          <label>Seller/Provider:</label>
+          <span>{{fullItemDetails?.provider_name || item.provider_name || item.seller_name || '-'}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Location:</label>
+          <span>{{item.city}}, {{item.state}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.domain || item.domain">
+          <label>Domain:</label>
+          <span>{{fullItemDetails?.domain || item.domain}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.is_returnable !== undefined">
+          <label>Returnable:</label>
+          <span>{{fullItemDetails?.is_returnable ? 'Yes' : 'No'}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.is_cancellable !== undefined">
+          <label>Cancellable:</label>
+          <span>{{fullItemDetails?.is_cancellable ? 'Yes' : 'No'}}</span>
+        </div>
+        <div class="detail-item" *ngIf="fullItemDetails?.available_on_cod !== undefined">
+          <label>COD Available:</label>
+          <span>{{fullItemDetails?.available_on_cod ? 'Yes' : 'No'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Category Selection (Editable) -->
+    <div class="edit-section">
+      <h4>Rozana Categories</h4>
+      
+      <div class="form-field">
+        <label>Category <span class="required">*</span></label>
+        <p-dropdown
+          [options]="categories"
+          [(ngModel)]="editedItem.rozana_category_id"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select Category"
+          [showClear]="true"
+          (onChange)="onCategoryChange()"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+
+      <div class="form-field">
+        <label>SubCategory</label>
+        <p-dropdown
+          [options]="subCategories"
+          [(ngModel)]="editedItem.rozana_sub_category_id"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select SubCategory"
+          [showClear]="true"
+          [disabled]="!editedItem.rozana_category_id"
+          (onChange)="onSubCategoryChange()"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+
+      <div class="form-field">
+        <label>Sub-SubCategory</label>
+        <p-dropdown
+          [options]="subSubCategories"
+          [(ngModel)]="editedItem.rozana_sub_sub_category_id"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Select Sub-SubCategory"
+          [showClear]="true"
+          [disabled]="!editedItem.rozana_sub_category_id"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="modal-footer">
+      <button 
+        pButton 
+        label="Cancel" 
+        class="p-button-text p-button-secondary"
+        (click)="onClose()"
+      ></button>
+      <button 
+        pButton 
+        label="Save Changes" 
+        class="p-button-primary"
+        (click)="onSave()"
+        [disabled]="!editedItem.rozana_category_id"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,74 @@
+<div class="filter-panel">
+  <div class="filter-fields">
+    <div *ngFor="let filter of config.filters" class="filter-field">
+      <label>{{filter.label}}</label>
+      
+      <!-- Dropdown -->
+      <p-dropdown
+        *ngIf="filter.type === 'dropdown'"
+        [options]="filter.options || []"
+        [(ngModel)]="filterValues[filter.key]"
+        [placeholder]="filter.placeholder || 'Select ' + filter.label"
+        [optionLabel]="filter.optionLabel || 'name'"
+        [optionValue]="filter.optionValue || 'code'"
+        [disabled]="isFilterDisabled(filter)"
+        [showClear]="false"
+        (onChange)="onFilterChange(filter.key, $event.value)"
+      ></p-dropdown>
+      
+      <!-- Text Input -->
+      <input
+        *ngIf="filter.type === 'text'"
+        pInputText
+        type="text"
+        [(ngModel)]="filterValues[filter.key]"
+        [placeholder]="filter.placeholder || filter.label"
+        [disabled]="isFilterDisabled(filter)"
+        (ngModelChange)="onFilterChange(filter.key, $event)"
+      />
+      
+      <!-- Number Input -->
+      <input
+        *ngIf="filter.type === 'number'"
+        pInputText
+        type="number"
+        [(ngModel)]="filterValues[filter.key]"
+        [placeholder]="filter.placeholder || filter.label"
+        [disabled]="isFilterDisabled(filter)"
+        (ngModelChange)="onFilterChange(filter.key, $event)"
+      />
+      
+      <!-- Date -->
+      <p-calendar
+        *ngIf="filter.type === 'date'"
+        [(ngModel)]="filterValues[filter.key]"
+        [placeholder]="filter.placeholder || 'Select date'"
+        [disabled]="isFilterDisabled(filter)"
+        [showIcon]="true"
+        (onSelect)="onFilterChange(filter.key, $event)"
+      ></p-calendar>
+      
+      <!-- MultiSelect -->
+      <p-multiSelect
+        *ngIf="filter.type === 'multiselect'"
+        [options]="filter.options || []"
+        [(ngModel)]="filterValues[filter.key]"
+        [placeholder]="filter.placeholder || 'Select ' + filter.label"
+        [optionLabel]="filter.optionLabel || 'name'"
+        [disabled]="isFilterDisabled(filter)"
+        (onChange)="onFilterChange(filter.key, $event.value)"
+      ></p-multiSelect>
+    </div>
+  </div>
+  
+  <!-- Clear Button -->
+  <div class="filter-actions" *ngIf="config.showClearButton !== false">
+    <button
+      pButton
+      label="Clear Filters"
+      icon="pi pi-filter-slash"
+      class="p-button-outlined p-button-sm"
+      (click)="onClearFilters()"
+    ></button>
+  </div>
+</div>

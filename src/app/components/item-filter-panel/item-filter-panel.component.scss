@@ -1,0 +1,114 @@
+.filter-panel {
+  background: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-header {
+  display: none;
+}
+
+.filter-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 20px;
+  overflow-y: auto;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+}
+
+:host ::ng-deep {
+  .p-dropdown {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    border-radius: 0;
+    background: transparent;
+    transition: border-color 0.2s ease;
+    
+    &:not(.p-disabled):hover {
+      border-bottom-color: #9CA3AF;
+    }
+    
+    &.p-focus {
+      border-bottom-color: var(--ondc-primary);
+      border-bottom-width: 2px;
+      box-shadow: none;
+    }
+    
+    .p-dropdown-label {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #374151;
+      
+      &.p-placeholder {
+        color: #9CA3AF;
+        font-weight: 400;
+      }
+    }
+    
+    .p-dropdown-trigger {
+      width: 36px;
+      color: #9CA3AF;
+    }
+  }
+  
+  .p-inputtext {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    border-radius: 0;
+    font-size: 14px;
+    color: #374151;
+    background: transparent;
+    transition: border-color 0.2s ease;
+    
+    &::placeholder {
+      color: #9CA3AF;
+      font-weight: 400;
+    }
+    
+    &:enabled:hover {
+      border-bottom-color: #9CA3AF;
+    }
+    
+    &:enabled:focus {
+      border-bottom-color: var(--ondc-primary);
+      border-bottom-width: 2px;
+      box-shadow: none;
+      outline: none;
+    }
+  }
+  
+  .p-dropdown.p-disabled {
+    opacity: 0.5;
+    background: transparent;
+    
+    .p-dropdown-label {
+      color: #D1D5DB;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-grid {
+    padding: 16px;
+    gap: 20px;
+  }
+}

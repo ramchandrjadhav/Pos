@@ -1,0 +1,21 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1><i class="pi pi-building"></i> Sellers Management</h1>
+    <p>Manage and view all sellers/providers</p>
+  </div>
+
+  <app-generic-data-table
+    [data]="sellers"
+    [config]="tableConfig"
+    [actions]="tableActions"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [showFilters]="true"
+    [filterConfig]="filterConfig"
+    title="Sellers"
+    (pageChange)="onPageChange($event)"
+    (rowClick)="onRowClick($event)"
+    (export)="onExport($event)"
+    (filtersChanged)="onFiltersChanged($event)"
+  ></app-generic-data-table>
+</div>

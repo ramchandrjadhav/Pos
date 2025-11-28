@@ -1,0 +1,300 @@
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+
+  i {
+    color: var(--ondc-primary);
+  }
+}
+
+:host ::ng-deep {
+  .p-dialog .p-dialog-header {
+    background: white;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 20px 24px;
+  }
+  
+  .p-dialog .p-dialog-header .p-dialog-header-icon {
+    width: 32px;
+    height: 32px;
+    color: #9CA3AF;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s;
+    
+    &:enabled:hover {
+      background: #F3F4F6;
+      color: #374151;
+    }
+    
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+  
+  .p-dialog .p-dialog-content {
+    padding: 24px;
+  }
+  
+  .p-dialog .p-dialog-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #E5E7EB;
+    background: #F9FAFB;
+  }
+  
+  .p-dropdown {
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    border-radius: 0;
+    background: transparent;
+    
+    &:not(.p-disabled):hover {
+      border-bottom-color: #9CA3AF;
+    }
+    
+    &.p-focus {
+      border-bottom-color: var(--ondc-primary);
+      border-bottom-width: 2px;
+      box-shadow: none;
+    }
+    
+    .p-dropdown-label {
+      padding: 10px 0;
+    }
+    
+    .p-dropdown-trigger {
+      color: #9CA3AF;
+    }
+    
+    .p-dropdown-clear-icon {
+      color: #9CA3AF;
+      right: 2.5rem;
+    }
+  }
+}
+
+.modal-content {
+  padding: 20px 0;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  
+  i {
+    color: var(--ondc-primary);
+  }
+  
+  p {
+    color: #6B7280;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.product-images {
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+}
+
+.detail-section {
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ondc-text-primary);
+    margin: 0 0 16px 0;
+  }
+}
+
+.edit-section {
+  margin-top: 32px; // Add spacing between Product Information and Rozana Categories
+  
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ondc-text-primary);
+    margin: 0 0 16px 0;
+  }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  span {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+    line-height: 1.5;
+    
+    &.item-id {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #6B7280;
+    }
+    
+    &.product-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+    }
+    
+    &.description {
+      color: #6B7280;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    
+    &.price {
+      font-size: 16px;
+      font-weight: 700;
+      color: #059669;
+      
+      &.max-price {
+        color: #DC2626;
+      }
+    }
+    
+    &.quantity {
+      font-weight: 600;
+      color: #059669;
+    }
+    
+    &.symbol {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #6B7280;
+      background: #F3F4F6;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+  }
+}
+
+.form-field {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ondc-text-primary);
+    margin-bottom: 8px;
+
+    .required {
+      color: #ef4444;
+    }
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  
+  button {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    
+    &.p-button-text {
+      color: #374151;
+      background: transparent;
+      border-color: #D1D5DB;
+      
+      &:enabled:hover {
+        background: #F9FAFB;
+        border-color: #9CA3AF;
+        color: #1F2937;
+      }
+      
+      &:enabled:active {
+        background: #F3F4F6;
+      }
+    }
+    
+    &.p-button-primary {
+      background: #2563EB;
+      border-color: #2563EB;
+      color: white;
+      
+      &:enabled:hover {
+        background: #1D4ED8;
+        border-color: #1D4ED8;
+      }
+      
+      &:enabled:active {
+        background: #1E40AF;
+        border-color: #1E40AF;
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: #93C5FD;
+        border-color: #93C5FD;
+      }
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      outline: none;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .p-dialog-header {
+    background-color: var(--ondc-primary);
+    color: white;
+    padding: 20px;
+  }
+
+  .p-dialog-content {
+    padding: 0 20px;
+  }
+
+  .p-dialog-footer {
+    padding: 20px;
+    border-top: 1px solid var(--ondc-border);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+}

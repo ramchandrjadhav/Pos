@@ -1,0 +1,21 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1><i class="pi pi-tag"></i> Categories Management</h1>
+    <p>Manage and organize your Rozana categories</p>
+  </div>
+
+  <app-generic-data-table
+    [data]="categories"
+    [config]="tableConfig"
+    [actions]="tableActions"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [showFilters]="true"
+    [filterConfig]="filterConfig"
+    title="Categories"
+    (pageChange)="onPageChange($event)"
+    (rowClick)="onRowClick($event)"
+    (export)="onExport($event)"
+    (filtersChanged)="onFiltersChanged($event)"
+  ></app-generic-data-table>
+</div>

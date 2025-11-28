@@ -1,0 +1,149 @@
+<div class="generic-table-wrapper" [class.with-filters]="filtersVisible && filterConfig">
+  <!-- Filter Sidebar -->
+  <aside *ngIf="filtersVisible && filterConfig" class="filter-sidebar">
+    <div class="filter-sidebar-header">
+      <h3><i class="pi pi-filter"></i> Filters</h3>
+    </div>
+    <div class="filter-sidebar-content">
+      <app-generic-filter-panel
+        [config]="filterConfig"
+        (filtersChanged)="onFiltersChanged($event)"
+        (clearFilters)="onClearFilters()"
+      ></app-generic-filter-panel>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="generic-table-container">
+    <!-- Header -->
+    <div class="table-header">
+    <div class="header-left">
+      <h3 *ngIf="title">{{title}} <span class="count">({{totalRecords}} total)</span></h3>
+    </div>
+    <div class="header-right">
+      <!-- Search -->
+      <span *ngIf="config.showSearch" class="p-input-icon-left search-box">
+        <i class="pi pi-search"></i>
+        <input 
+          pInputText 
+          type="text" 
+          [(ngModel)]="searchValue"
+          placeholder="Search..." 
+        />
+      </span>
+      
+      <!-- Export Button -->
+      <button 
+        *ngIf="config.showExport"
+        pButton 
+        icon="pi pi-download" 
+        label="Export"
+        class="p-button-outlined"
+        (click)="onExport('csv')"
+      ></button>
+      
+      <!-- Import Button -->
+      <button 
+        *ngIf="config.showImport"
+        pButton 
+        icon="pi pi-upload" 
+        label="Import"
+        class="p-button-success"
+        (click)="fileInput.click()"
+      ></button>
+      <input 
+        #fileInput 
+        type="file" 
+        style="display: none;" 
+        (change)="onImport($event)"
+        accept=".csv,.xlsx"
+      />
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <p-table
+    [value]="data"
+    [columns]="config.columns"
+    [paginator]="config.paginator !== false"
+    [rows]="config.rows || 10"
+    [rowsPerPageOptions]="config.rowsPerPageOptions || [10, 25, 50]"
+    [loading]="loading"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [first]="first"
+    [globalFilterFields]="config.globalFilterFields || []"
+    [dataKey]="config.dataKey || 'id'"
+    [selectionMode]="config.selectionMode || null"
+    styleClass="p-datatable-striped"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} items"
+    (onLazyLoad)="onPageChange($event)"
+  >
+    <!-- Header Template -->
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" 
+            [pSortableColumn]="col.sortable ? col.field : null"
+            [style.width]="col.width">
+          <div class="header-cell">
+            <i *ngIf="col.icon" [class]="col.icon" [style.color]="col.iconColor"></i>
+            {{col.header}}
+            <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
+          </div>
+        </th>
+        <th *ngIf="actions.length > 0">Actions</th>
+      </tr>
+    </ng-template>
+
+    <!-- Body Template -->
+    <ng-template pTemplate="body" let-row let-columns="columns">
+      <tr (click)="onRowClick(row)" [style.cursor]="'pointer'">
+        <td *ngFor="let col of columns">
+          <!-- Text Type -->
+          <span *ngIf="!col.type || col.type === 'text'">
+            {{col.format ? col.format(row) : (getFieldValue(row, col.field) || '-')}}
+          </span>
+          
+          <!-- Number Type -->
+          <span *ngIf="col.type === 'number'" class="number-cell">
+            {{getFieldValue(row, col.field) || 0}}
+          </span>
+          
+          <!-- Badge Type -->
+          <span *ngIf="col.type === 'badge'" class="badge">
+            {{getFieldValue(row, col.field) || '-'}}
+          </span>
+          
+          <!-- Icon Type -->
+          <span *ngIf="col.type === 'icon'" class="icon-cell">
+            <i [class]="col.icon" [style.color]="col.iconColor"></i>
+            {{getFieldValue(row, col.field)}}
+          </span>
+        </td>
+        
+        <!-- Actions Column -->
+        <td *ngIf="actions.length > 0" class="actions-cell">
+          <button 
+            *ngFor="let action of actions"
+            pButton 
+            [icon]="action.icon"
+            [class]="action.styleClass || 'p-button-rounded p-button-text p-button-sm'"
+            (click)="executeAction(action, row); $event.stopPropagation()"
+            [style.display]="isActionVisible(action, row) ? 'inline-flex' : 'none'"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Empty Message -->
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="columns.length + (actions.length > 0 ? 1 : 0)" class="empty-message">
+          <i class="pi pi-inbox"></i>
+          <p>No data found</p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  </div>
+</div>

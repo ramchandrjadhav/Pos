@@ -1,0 +1,149 @@
+.top-header {
+  height: 64px;
+  background: white;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hamburger-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  i {
+    font-size: 20px;
+    color: #374151;
+  }
+  
+  &:hover {
+    background: #F3F4F6;
+  }
+  
+  &:active {
+    background: #E5E7EB;
+  }
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  
+  h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  span {
+    font-size: 11px;
+    color: #6B7280;
+    font-weight: 500;
+    line-height: 1;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.filter-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #E5E7EB;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  
+  i {
+    font-size: 16px;
+    color: var(--ondc-primary);
+  }
+  
+  &:hover {
+    background: #F9FAFB;
+    border-color: var(--ondc-primary);
+  }
+  
+  &:active {
+    background: #F3F4F6;
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--ondc-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--ondc-primary-dark);
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 768px) {
+  .user-label {
+    display: none;
+  }
+}

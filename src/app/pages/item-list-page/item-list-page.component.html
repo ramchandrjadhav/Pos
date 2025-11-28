@@ -1,0 +1,29 @@
+<div class="item-list-page">
+  <div class="page-header">
+    <h1><i class="pi pi-box"></i> Item Management</h1>
+    <p>Manage and organize your ONDC items with Rozana categories</p>
+  </div>
+
+  <app-generic-data-table
+    [data]="items"
+    [config]="tableConfig"
+    [actions]="tableActions"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [showFilters]="true"
+    [filterConfig]="filterConfig"
+    title="Items"
+    (pageChange)="onPageChanged($event)"
+    (rowClick)="onItemSelected($event)"
+    (export)="onExport($event)"
+    (import)="onImport($event)"
+    (filtersChanged)="onFiltersChanged($event)"
+  ></app-generic-data-table>
+
+  <app-item-detail-modal
+    [visible]="showDetailModal"
+    [item]="selectedItem"
+    (close)="onModalClose()"
+    (save)="onItemSave($event)"
+  ></app-item-detail-modal>
+</div>

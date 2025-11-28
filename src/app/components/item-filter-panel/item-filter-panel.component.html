@@ -1,0 +1,130 @@
+<div class="filter-panel">
+  <div class="filter-header">
+    <div class="filter-title">
+      <i class="pi pi-filter"></i>
+      <span>Filters</span>
+    </div>
+    <button 
+      pButton 
+      label="Apply Filters" 
+      icon="pi pi-check" 
+      class="p-button-sm"
+      (click)="onFilterChange()"
+    ></button>
+  </div>
+
+  <div class="filter-grid">
+    <!-- Domain Filter -->
+    <div class="filter-item">
+      <label>Domain</label>
+      <p-dropdown
+        [options]="domains"
+        [(ngModel)]="filters.domain"
+        optionLabel="name"
+        optionValue="code"
+        placeholder="Select Domain"
+        [showClear]="true"
+        (onChange)="onFilterChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- State Filter -->
+    <div class="filter-item">
+      <label>State</label>
+      <p-dropdown
+        [options]="states"
+        [(ngModel)]="selectedState"
+        optionLabel="name"
+        optionValue="name"
+        placeholder="Select State"
+        [showClear]="true"
+        (onChange)="onStateChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- City Filter -->
+    <div class="filter-item">
+      <label>City</label>
+      <p-dropdown
+        [options]="cities"
+        [(ngModel)]="filters.city"
+        optionLabel="name"
+        optionValue="name"
+        placeholder="Select City"
+        [showClear]="true"
+        [disabled]="!selectedState"
+        (onChange)="onFilterChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- Seller Filter -->
+    <div class="filter-item">
+      <label>Seller/Provider</label>
+      <p-dropdown
+        [options]="sellers"
+        [(ngModel)]="filters.seller_id"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select Seller"
+        [showClear]="true"
+        (onChange)="onFilterChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-item">
+      <label>Category</label>
+      <p-dropdown
+        [options]="categories"
+        [(ngModel)]="filters.rozana_category_id"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select Category"
+        [showClear]="true"
+        (onChange)="onCategoryChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- SubCategory Filter -->
+    <div class="filter-item">
+      <label>SubCategory</label>
+      <p-dropdown
+        [options]="subCategories"
+        [(ngModel)]="filters.rozana_sub_category_id"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select SubCategory"
+        [showClear]="true"
+        [disabled]="!filters.rozana_category_id"
+        (onChange)="onSubCategoryChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- SubSubCategory Filter -->
+    <div class="filter-item">
+      <label>Sub-SubCategory</label>
+      <p-dropdown
+        [options]="subSubCategories"
+        [(ngModel)]="filters.rozana_sub_sub_category_id"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Select Sub-SubCategory"
+        [showClear]="true"
+        [disabled]="!filters.rozana_sub_category_id"
+        (onChange)="onFilterChange()"
+      ></p-dropdown>
+    </div>
+
+    <!-- Search Filter -->
+    <div class="filter-item">
+      <label>Search</label>
+      <input 
+        pInputText 
+        type="text" 
+        [(ngModel)]="filters.search"
+        placeholder="Search items..."
+        (keyup.enter)="onFilterChange()"
+      />
+    </div>
+  </div>
+</div>

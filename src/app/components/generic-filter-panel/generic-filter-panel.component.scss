@@ -1,0 +1,147 @@
+.filter-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    letter-spacing: 0.3px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-bottom: 2px solid #E5E7EB;
+    font-size: 14px;
+    color: #1F2937;
+    background: transparent;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-bottom-color: #2563EB;
+    }
+
+    &::placeholder {
+      color: #9CA3AF;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.filter-actions {
+  padding-top: 12px;
+  border-top: 1px solid #E5E7EB;
+
+  button {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+:host ::ng-deep {
+  .p-dropdown,
+  .p-multiselect,
+  .p-calendar {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #E5E7EB;
+    border-radius: 0;
+    transition: border-color 0.2s;
+
+    &:not(.p-disabled):hover {
+      border-bottom-color: #D1D5DB;
+    }
+
+    &.p-focus {
+      border-bottom-color: #2563EB;
+      box-shadow: none;
+    }
+
+    .p-inputtext {
+      border: none;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #1F2937;
+      background: transparent;
+
+      &::placeholder {
+        color: #9CA3AF;
+      }
+    }
+
+    .p-dropdown-trigger,
+    .p-multiselect-trigger {
+      width: 36px;
+      color: #6B7280;
+    }
+  }
+
+  .p-dropdown-panel,
+  .p-multiselect-panel {
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-top: 4px;
+
+    .p-dropdown-items,
+    .p-multiselect-items {
+      padding: 4px;
+
+      .p-dropdown-item,
+      .p-multiselect-item {
+        padding: 10px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #374151;
+        transition: all 0.15s;
+
+        &:hover {
+          background: #F3F4F6;
+        }
+
+        &.p-highlight {
+          background: #EFF6FF;
+          color: #2563EB;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .p-calendar-w-btn {
+    .p-datepicker-trigger {
+      width: 36px;
+      color: #6B7280;
+      background: transparent;
+      border: none;
+
+      &:hover {
+        background: #F3F4F6;
+      }
+    }
+  }
+}

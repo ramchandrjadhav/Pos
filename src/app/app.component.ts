@@ -50,8 +50,10 @@ export class AppComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    console.log('AppComponent: ngOnInit called');
     // Listen for filter state changes from pages
     window.addEventListener('filtersStateChanged', (event: any) => {
+      console.log('AppComponent: filtersStateChanged event received', event.detail);
       this.showFilters = event.detail.open;
       if (this.showFilters && this.showSidebar) {
         this.showSidebar = false;
@@ -61,10 +63,12 @@ export class AppComponent implements OnInit {
   }
 
   onToggleSidebar() {
+    console.log('AppComponent: onToggleSidebar called', { currentState: this.showSidebar });
     this.showSidebar = !this.showSidebar;
     
     // If opening sidebar, close filters
     if (this.showSidebar && this.showFilters) {
+      console.log('AppComponent: Closing filters to open sidebar');
       window.dispatchEvent(new CustomEvent('closeFilters'));
     }
     
@@ -72,10 +76,12 @@ export class AppComponent implements OnInit {
   }
 
   onToggleFilters() {
+    console.log('AppComponent: onToggleFilters called', { currentState: this.showFilters });
     this.showFilters = !this.showFilters;
     
     // If opening filters, close sidebar
     if (this.showFilters && this.showSidebar) {
+      console.log('AppComponent: Closing sidebar to open filters');
       this.showSidebar = false;
     }
     

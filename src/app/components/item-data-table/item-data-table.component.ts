@@ -31,6 +31,7 @@ export class ItemDataTableComponent {
   @Output() importRequested = new EventEmitter<{ file: File; format: string }>();
 
   onPageChange(event: any) {
+    console.log('ItemDataTableComponent: onPageChange called', event);
     if (event && typeof event.first !== 'undefined' && typeof event.rows !== 'undefined') {
       const page = Math.floor(event.first / event.rows);
       
@@ -42,27 +43,33 @@ export class ItemDataTableComponent {
         sortOrder: event.sortOrder
       };
       
+      console.log('ItemDataTableComponent: Emitting pageChanged event', validatedEvent);
       this.pageChanged.emit(validatedEvent);
     }
   }
 
   onRowClick(item: Item) {
+    console.log('ItemDataTableComponent: onRowClick called', item);
     this.itemSelected.emit(item);
   }
 
   onEdit(item: Item, event: Event) {
+    console.log('ItemDataTableComponent: onEdit called', item);
     event.stopPropagation();
     this.itemSelected.emit(item);
   }
 
   onExport(format: string) {
+    console.log('ItemDataTableComponent: onExport called', format);
     this.exportRequested.emit(format);
   }
 
   onFileSelected(event: any) {
+    console.log('ItemDataTableComponent: onFileSelected called', event);
     const file = event.target.files[0];
     if (file) {
       const format = file.name.endsWith('.csv') ? 'csv' : 'excel';
+      console.log('ItemDataTableComponent: File selected', { file: file.name, format });
       this.importRequested.emit({ file, format });
     }
   }

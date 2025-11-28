@@ -53,6 +53,7 @@ export class ItemListPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('ItemListPageComponent: ngOnInit called');
     this.initializeTableConfig();
     this.initializeFilterConfig();
     this.loadMasterData();
@@ -61,6 +62,7 @@ export class ItemListPageComponent implements OnInit {
   }
 
   initializeTableConfig() {
+    console.log('ItemListPageComponent: initializeTableConfig called');
     this.tableConfig = {
       columns: [
         { field: 'name', header: 'Product Name', sortable: true, width: '200px' },
@@ -92,6 +94,7 @@ export class ItemListPageComponent implements OnInit {
   }
 
   initializeFilterConfig() {
+    console.log('ItemListPageComponent: initializeFilterConfig called');
     this.filterConfig = {
       filters: [
         {
@@ -179,8 +182,10 @@ export class ItemListPageComponent implements OnInit {
   }
 
   loadMasterData() {
+    console.log('ItemListPageComponent: loadMasterData called');
     this.masterDataService.getDomains().subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: Domains loaded', response);
         this.domains = response.data;
         this.updateFilterOptions('domain_code', this.domains);
       }
@@ -188,6 +193,7 @@ export class ItemListPageComponent implements OnInit {
 
     this.masterDataService.getStates().subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: States loaded', response);
         // Transform array of strings to array of objects with name and code
         if (Array.isArray(response.data) && response.data.length > 0 && typeof response.data[0] === 'string') {
           this.states = response.data.map((state: any) => ({
@@ -203,6 +209,7 @@ export class ItemListPageComponent implements OnInit {
 
     this.masterDataService.getSellers().subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: Sellers loaded', response);
         this.sellers = response.data;
         this.updateFilterOptions('provider_id', this.sellers);
       }
@@ -210,8 +217,10 @@ export class ItemListPageComponent implements OnInit {
   }
 
   loadCategories() {
+    console.log('ItemListPageComponent: loadCategories called');
     this.categoryService.getCategories().subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: Categories loaded', response);
         this.categories = response.data;
         this.updateFilterOptions('category_id', this.categories);
       }
@@ -219,8 +228,10 @@ export class ItemListPageComponent implements OnInit {
   }
 
   loadCities(stateCode: string) {
+    console.log('ItemListPageComponent: loadCities called', stateCode);
     this.masterDataService.getCities(stateCode).subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: Cities loaded', response);
         // Transform array of strings to array of objects with name and code
         if (Array.isArray(response.data) && response.data.length > 0 && typeof response.data[0] === 'string') {
           this.cities = response.data.map((city: any) => ({
@@ -236,8 +247,10 @@ export class ItemListPageComponent implements OnInit {
   }
 
   loadSubCategories(categoryId: number) {
+    console.log('ItemListPageComponent: loadSubCategories called', categoryId);
     this.categoryService.getSubCategories(categoryId).subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: SubCategories loaded', response);
         this.subCategories = response.data;
         this.updateFilterOptions('sub_category_id', this.subCategories);
       }
@@ -245,8 +258,10 @@ export class ItemListPageComponent implements OnInit {
   }
 
   loadSubSubCategories(subCategoryId: number) {
+    console.log('ItemListPageComponent: loadSubSubCategories called', subCategoryId);
     this.categoryService.getSubSubCategories(subCategoryId).subscribe({
       next: (response) => {
+        console.log('ItemListPageComponent: SubSubCategories loaded', response);
         this.subSubCategories = response.data;
         this.updateFilterOptions('sub_sub_category_id', this.subSubCategories);
       }
@@ -254,6 +269,7 @@ export class ItemListPageComponent implements OnInit {
   }
 
   updateFilterOptions(filterKey: string, options: any[]) {
+    console.log('ItemListPageComponent: updateFilterOptions called', { filterKey, optionsCount: options?.length });
     if (!this.filterConfig) {
       this.initializeFilterConfig();
       return;
@@ -266,11 +282,13 @@ export class ItemListPageComponent implements OnInit {
   }
 
   loadItems(showLoading: boolean = true) {
+    console.log('ItemListPageComponent: loadItems called', { showLoading, filters: this.currentFilters });
     if (showLoading) {
       this.loading = true;
     }
     this.itemService.getItems(this.currentFilters).subscribe({
       next: (response: any) => {
+        console.log('ItemListPageComponent: Items loaded', response);
         // Handle the actual API response structure
         // Response structure: { items: [...], total_count: 867, page: 1, page_size: 10 }
         if (response && response.items) {
@@ -285,10 +303,12 @@ export class ItemListPageComponent implements OnInit {
           this.totalRecords = 0;
         }
         
+        console.log('ItemListPageComponent: Items processed', { itemsCount: this.items.length, totalRecords: this.totalRecords });
         this.loading = false;
         this.cdr.markForCheck();
       },
       error: (error) => {
+        console.error('ItemListPageComponent: Error loading items', error);
         this.items = [];
         this.totalRecords = 0;
         this.loading = false;
@@ -297,20 +317,24 @@ export class ItemListPageComponent implements OnInit {
   }
 
   onFiltersChanged(filters: any) {
+    console.log('ItemListPageComponent: onFiltersChanged called', filters);
     const prevFilters: any = { ...this.currentFilters };
     
     // Handle state change -> load cities
     if (filters.state_code && filters.state_code !== prevFilters.state_code) {
+      console.log('ItemListPageComponent: State changed, loading cities', filters.state_code);
       this.loadCities(filters.state_code);
     }
     
     // Handle category change -> load subcategories
     if (filters.category_id && filters.category_id !== prevFilters.category_id) {
+      console.log('ItemListPageComponent: Category changed, loading subcategories', filters.category_id);
       this.loadSubCategories(filters.category_id);
     }
     
     // Handle subcategory change -> load sub-subcategories
     if (filters.sub_category_id && filters.sub_category_id !== prevFilters.sub_category_id) {
+      console.log('ItemListPageComponent: SubCategory changed, loading sub-subcategories', filters.sub_category_id);
       this.loadSubSubCategories(filters.sub_category_id);
     }
     
@@ -321,10 +345,12 @@ export class ItemListPageComponent implements OnInit {
       ...filters
     } as ItemFilters;
     
+    console.log('ItemListPageComponent: Updated filters', this.currentFilters);
     this.loadItems();
   }
 
   onClearFilters() {
+    console.log('ItemListPageComponent: onClearFilters called');
     this.currentFilters = {
       page: 1,
       page_size: 10
@@ -338,22 +364,26 @@ export class ItemListPageComponent implements OnInit {
   }
 
   onPageChanged(event: { page: number; page_size: number }) {
+    console.log('ItemListPageComponent: onPageChanged called', event);
     this.currentFilters.page = event.page;
     this.currentFilters.page_size = event.page_size;
     this.loadItems(false);
   }
 
   onItemSelected(item: Item) {
+    console.log('ItemListPageComponent: onItemSelected called', item);
     this.selectedItem = item;
     this.showDetailModal = true;
   }
 
   onModalClose() {
+    console.log('ItemListPageComponent: onModalClose called');
     this.showDetailModal = false;
     this.selectedItem = null;
   }
 
   onItemSave(updatedItem: Item) {
+    console.log('ItemListPageComponent: onItemSave called', updatedItem);
     const items = [{
       id: updatedItem.id,
       rozana_category_id: updatedItem.rozana_category_id,
@@ -361,19 +391,24 @@ export class ItemListPageComponent implements OnInit {
       rozana_sub_sub_category_id: updatedItem.rozana_sub_sub_category_id
     }];
 
+    console.log('ItemListPageComponent: Bulk updating categories', items);
     this.itemService.bulkUpdateCategories(items).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('ItemListPageComponent: Bulk update successful', response);
         this.showDetailModal = false;
         this.loadItems();
       },
-      error: () => {
+      error: (error) => {
+        console.error('ItemListPageComponent: Bulk update error', error);
       }
     });
   }
 
   onExport(format: string) {
+    console.log('ItemListPageComponent: onExport called', format);
     this.itemService.exportItems(this.currentFilters, format).subscribe({
       next: (blob) => {
+        console.log('ItemListPageComponent: Export successful', blob);
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -381,17 +416,21 @@ export class ItemListPageComponent implements OnInit {
         link.click();
         window.URL.revokeObjectURL(url);
       },
-      error: () => {
+      error: (error) => {
+        console.error('ItemListPageComponent: Export error', error);
       }
     });
   }
 
   onImport(file: File) {
+    console.log('ItemListPageComponent: onImport called', file);
     this.itemService.importItems(file, 'csv').subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('ItemListPageComponent: Import successful', response);
         this.loadItems();
       },
-      error: () => {
+      error: (error) => {
+        console.error('ItemListPageComponent: Import error', error);
       }
     });
   }

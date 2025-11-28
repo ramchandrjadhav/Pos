@@ -1,0 +1,16 @@
+version: 1
+
+rules:
+  - name: check-pr-size
+    description: Warn if PR is too large
+    condition: pull_request.lines_changed > 200
+    actions:
+      - comment:
+          body: "⚠️ This PR is too large. Please break it into smaller changes."
+
+  - name: request-review-for-all-prs
+    description: Always ask Ram to review PR
+    condition: true
+    actions:
+      - assign_reviewer:
+          reviewers: ["ramchandrjadhav"]
